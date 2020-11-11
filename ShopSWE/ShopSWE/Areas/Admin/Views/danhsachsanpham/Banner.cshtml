@@ -1,0 +1,148 @@
+﻿@model ShopSWE.Models.Enity.Banner
+
+@{
+    ViewBag.Title = "Banner";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="~/Content/Css/style.css">
+<script src="~/Content/ckfinder/ckfinder.js"></script>
+
+<style>
+    .form-horizontal {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+        .form-horizontal h3 {
+            font-weight: bold;
+            font-size: 25px;
+            margin-left: 15px;
+        }
+
+        .form-horizontal h2 {
+            font-weight: bold;
+            font-size: 30px;
+            margin: 10px 0 10px 15px;
+        }
+
+    .form-group button {
+        border: none;
+        background-color: black;
+        color: orange;
+        border-radius: 10px;
+        padding: 6px 20px;
+        font-weight: bold;
+    }
+
+    .form-group a {
+        background-color: black;
+        color: orange;
+        border-radius: 10px;
+        padding: 6px 20px;
+        outline: none;
+        font-weight: bold;
+    }
+
+        .form-group a:hover {
+            text-decoration: none;
+        }
+
+    #btnSelectImage, #btnSelectImage2 {
+        width: 200px;
+        font-size: 17px;
+        font-weight: bold;
+        background: black;
+        color: orange;
+        margin-top: 20px;
+        text-align: center;
+        border-radius: 5px;
+        padding-bottom: 2px;
+        cursor: pointer;
+    }
+
+    .form-control {
+        outline: none;
+        border: 1px solid black;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2>Chỉnh sửa Banner</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            <h3>Ảnh Banner Trái</h3>
+            @Html.LabelFor(model => model.BannerTrai, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BannerTrai, new { htmlAttributes = new { @class = "form-control", @id = "txtImage" } })
+                @Html.ValidationMessageFor(model => model.BannerTrai, "", new { @class = "text-danger" })
+                <p id="btnSelectImage">Chọn ảnh Banner Trái</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h3>Ảnh Banner Phải</h3>
+            @Html.LabelFor(model => model.BannerPhai, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BannerPhai, new { htmlAttributes = new { @class = "form-control", @id = "txtImage2" } })
+                @Html.ValidationMessageFor(model => model.BannerPhai, "", new { @class = "text-danger" })
+                <p id="btnSelectImage2">Chọn ảnh Banner Phải</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h3>Link Facebook</h3>
+            @Html.LabelFor(model => model.LinkFacebook, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LinkFacebook, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LinkFacebook, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LinkIsta, htmlAttributes: new { @class = "control-label col-md-2" })
+            <h3>Link Instagram</h3>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LinkIsta, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LinkIsta, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit">Save</button>
+                <a href="@Url.Action("Index","danhsachsanpham")">Trở về Danh sách sản phẩm</a>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#btnSelectImage").on('click', function () {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage').val(url);
+            };
+            finder.popup();
+        })
+        $("#btnSelectImage2").on('click', function () {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage2').val(url);
+            };
+            finder.popup();
+        })
+    })
+</script>
